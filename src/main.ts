@@ -8,6 +8,8 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import "element-plus/dist/index.css";
 import ElementPlus from "element-plus";
 
+import "@/styles/common.style.less"; // import global styles
+
 const app = createApp(App);
 
 app.use(createPinia());

@@ -1,4 +1,4 @@
 export interface IDataType<T = any> {
-  code: number;
+  code: string;
   data: T;
 }

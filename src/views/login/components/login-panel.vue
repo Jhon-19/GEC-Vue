@@ -1,16 +1,5 @@
 <template>
-  <ElRow justify="center">
-    <ElCol :span="12">
-      <div class="login-title">燃气爆炸案件多模态知识图谱</div>
-    </ElCol>
-  </ElRow>
-  <ElRow justify="center">
-    <ElCol :span="6">
-      <div class="login-title">
-        <span>管理系统</span>
-      </div>
-    </ElCol>
-  </ElRow>
+  <LoginTitle />
   <ElRow justify="center">
     <ElCol :span="6">
       <ElTabs type="border-card" stretch v-model="currentTab">
@@ -41,15 +30,18 @@
       <div class="text-right"><ElLink type="primary">忘记密码</ElLink></div>
     </ElCol>
   </ElRow>
-  <ElRow>
-    <ElCol :span="2" :offset="11">
-      <ElButton class="login-button" type="primary" @click="handleLoginClick"
+  <ElRow justify="center">
+    <ElCol :span="2">
+      <ElButton
+        class="full-width-button"
+        type="primary"
+        @click="handleLoginClick"
         >立即登录</ElButton
       >
     </ElCol>
   </ElRow>
-  <ElRow>
-    <ElCol :span="4" :offset="10">
+  <ElRow justify="center">
+    <ElCol :span="3">
       <div class="text-center">
         没有账号？<ElLink type="primary" href="/signup">点击注册</ElLink>
       </div>
@@ -71,6 +63,7 @@ import { onMounted, ref, watch } from "vue";
 import LoginAccount from "./login-account.vue";
 import localCache from "@/utils/cache";
 import LoginEmail from "./login-email.vue";
+import LoginTitle from "@/components/login-title.vue";
 
 const currentTab = ref("account");
 const isKeepPassword = ref(true);
@@ -112,28 +105,6 @@ const handleLoginClick = () => {
 </script>
 
 <style scoped lang="less">
-.login-title {
-  text-align: center;
-  font-size: 27px;
-  margin-bottom: 10px;
-
-  span {
-    font-size: 23px;
-  }
-}
-
-.text-right {
-  text-align: right;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.login-button {
-  width: 100%;
-}
-
 .el-row:last-child {
   margin-top: 20px;
 }

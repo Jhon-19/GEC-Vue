@@ -1,6 +1,12 @@
 <template>
   <div>
-    <ElForm label-width="60px" :model="account" :rules="rules" ref="formRef">
+    <ElForm
+      label-width="60px"
+      :model="account"
+      :rules="rules"
+      ref="formRef"
+      status-icon
+    >
       <ElFormItem label="账号" prop="username">
         <ElInput v-model="account.username" />
       </ElFormItem>
@@ -13,7 +19,12 @@
 
 <script lang="ts" setup>
 import localCache from "@/utils/cache";
-import { ElFormItem, type ElForm, ElInput } from "element-plus";
+import {
+  ElFormItem,
+  type ElForm,
+  ElInput,
+  type FormInstance,
+} from "element-plus";
 import { reactive, ref } from "vue";
 import { rules } from "../config/account-config";
 import { useLoginStore } from "@/stores/login/login";
@@ -26,7 +37,7 @@ const account = reactive({
   password: "",
 });
 
-const formRef = ref<InstanceType<typeof ElForm>>();
+const formRef = ref<FormInstance>();
 
 const loginAction = (isKeepPassword: boolean) => {
   formRef.value?.validate((valid) => {
