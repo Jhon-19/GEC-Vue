@@ -1,3 +1,4 @@
+import { whitelistOfAuth } from "./whitelist";
 import { GEC_AUTH } from "@/constants/auth.constant";
 import localCache from "@/utils/cache";
 import {
@@ -15,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: () => import("@/views/login/login.vue"),
+  },
+  {
+    path: "/reset-password",
+    name: "reset-password",
+    component: () => import("@/views/login/reset-password/reset-password.vue"),
   },
   {
     path: "/signup",
@@ -36,7 +42,7 @@ const router = createRouter({
 router.beforeEach((to) => {
   const path = to.path;
 
-  if (path !== "/login" && path !== "/signup") {
+  if (!whitelistOfAuth.includes(path)) {
     const token = localCache.getCache(GEC_AUTH);
     if (!token) {
       return "/login";

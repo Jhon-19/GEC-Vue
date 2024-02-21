@@ -27,7 +27,9 @@
       <div><ElCheckbox v-model="isKeepPassword">记住密码</ElCheckbox></div>
     </ElCol>
     <ElCol :span="2" :offset="2">
-      <div class="text-right"><ElLink type="primary">忘记密码</ElLink></div>
+      <div class="text-right">
+        <ElLink type="primary" href="/reset-password">忘记密码</ElLink>
+      </div>
     </ElCol>
   </ElRow>
   <ElRow justify="center">

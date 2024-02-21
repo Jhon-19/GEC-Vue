@@ -1,8 +1,11 @@
 import { defineStore } from "pinia";
 import { reactive, toRefs } from "vue";
 import type { ILoginState } from "./types";
-import type { ILoginPayload } from "@/service/login/types";
-import { loginRequest } from "@/service/login/login";
+import type {
+  ILoginPayload,
+  IResetPasswordPayload,
+} from "@/service/login/types";
+import { loginRequest, resetPasswordRequest } from "@/service/login/login";
 import localCache from "@/utils/cache";
 import router from "@/router";
 import { GEC_AUTH } from "@/constants/auth.constant";
@@ -44,8 +47,20 @@ export const useLoginStore = defineStore("login", () => {
     }
   }
 
+  async function resetPassword(resetPasswordPayload: IResetPasswordPayload) {
+    const resetResult = await resetPasswordRequest(resetPasswordPayload);
+    const resetStatus = resetResult.data;
+    if (resetStatus) {
+      ElMessage.success("密码重置成功");
+    } else {
+      ElMessage.error("验证未通过");
+    }
+    localCache.deleteCache("password");
+  }
+
   return {
     ...toRefs(loginState),
     loginIn,
+    resetPassword,
   };
 });

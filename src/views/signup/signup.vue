@@ -1,12 +1,8 @@
 <template>
-  <div>
-    <LoginTitle />
-    <SignupPanel />
-  </div>
+  <SignupPanel />
 </template>
 
 <script lang="ts" setup>
-import LoginTitle from "@/components/login-title.vue";
 import SignupPanel from "./components/signup-panel.vue";
 </script>
 

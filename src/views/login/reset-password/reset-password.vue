@@ -5,7 +5,7 @@
       <ElCol :span="6">
         <ElCard shadow="never">
           <ElForm
-            label-width="80px"
+            label-width="70px"
             :model="account"
             :rules="rules"
             ref="formRef"
@@ -17,16 +17,12 @@
             <ElFormItem label="邮箱" prop="email">
               <ElInput v-model="account.email" />
             </ElFormItem>
-            <ElFormItem label="密码" prop="password">
+            <ElDivider>
+              <ElIcon><Star /></ElIcon>
+            </ElDivider>
+            <ElFormItem label="新密码" prop="password">
               <ElInput
                 v-model="account.password"
-                type="password"
-                show-password
-              />
-            </ElFormItem>
-            <ElFormItem label="确认密码" prop="checkPassword">
-              <ElInput
-                v-model="account.checkPassword"
                 type="password"
                 show-password
               />
@@ -37,53 +33,56 @@
     </ElRow>
     <ElRow justify="center">
       <ElCol :span="2">
-        <ElButton class="full-width-button" type="success" @click="signupAction"
-          >注册用户</ElButton
+        <ElTooltip
+          content="验证用户名和邮箱后可以重置密码"
+          placement="bottom"
+          effect="light"
         >
+          <ElButton
+            class="full-width-button"
+            type="warning"
+            @click="resetPasswordAction"
+          >
+            重置密码
+          </ElButton>
+        </ElTooltip>
       </ElCol>
     </ElRow>
   </div>
 </template>
 
 <script lang="ts" setup>
+import LoginTitle from "@/components/login-title.vue";
 import {
-  ElButton,
-  ElCard,
-  ElCol,
-  ElForm,
   ElFormItem,
-  ElInput,
-  ElRow,
+  type ElCard,
+  type ElCol,
+  type ElForm,
+  type ElRow,
+  ElButton,
+  ElDivider,
   type FormInstance,
+  ElIcon,
+  ElTooltip,
 } from "element-plus";
 import { reactive, ref } from "vue";
-import { generateRules } from "../config/signup-config";
-import { useSignupStore } from "@/stores/signup/signup";
-import type { ISignupPayload } from "@/service/signup/types";
-import LoginTitle from "@/components/login-title.vue";
+import { rules } from "../config/reset-password-config";
+import { useLoginStore } from "@/stores/login/login";
 
-const loginStore = useSignupStore();
+const loginStore = useLoginStore();
 
 const account = reactive({
   username: "",
   email: "",
   password: "",
-  checkPassword: "",
 });
-
-const rules = generateRules(account);
 
 const formRef = ref<FormInstance>();
 
-const signupAction = () => {
+const resetPasswordAction = () => {
   formRef.value?.validate((valid) => {
     if (valid) {
-      const signupPayload: ISignupPayload = {
-        username: account.username,
-        email: account.email,
-        password: account.password,
-      };
-      loginStore.signUp(signupPayload);
+      loginStore.resetPassword({ ...account });
     }
   });
 };

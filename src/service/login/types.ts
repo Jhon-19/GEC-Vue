@@ -7,3 +7,9 @@ export interface ILoginResult {
   id: number;
   token: string;
 }
+
+export interface IResetPasswordPayload {
+  username: string;
+  email: string;
+  password: string;
+}
