@@ -14,14 +14,17 @@
               <span>{{ item.name }}</span>
             </template>
             <template v-for="subItem in item.children" :key="subItem.id">
-              <ElMenuItem :index="subItem.id">
+              <ElMenuItem
+                :index="subItem.id"
+                @click="handleMenuItemClick(subItem)"
+              >
                 <span>{{ subItem.name }}</span>
               </ElMenuItem>
             </template>
           </ElSubMenu>
         </template>
         <template v-else>
-          <ElMenuItem :index="item.id">
+          <ElMenuItem :index="item.id" @click="handleMenuItemClick(item)">
             <span>{{ item.name }}</span>
           </ElMenuItem>
         </template>
@@ -34,9 +37,16 @@
 import { ElIcon, ElMenu, ElMenuItem, ElSubMenu } from "element-plus";
 import logo from "@/assets/images/logo.jpg";
 import { useLoginStore } from "@/stores/login/login";
+import router from "@/router";
 
 const loginStore = useLoginStore();
 const userMenus = loginStore.userMenus;
+
+const handleMenuItemClick = (item: any) => {
+  router.push({
+    path: item.url ?? "not-found",
+  });
+};
 </script>
 
 <style scoped lang="less">

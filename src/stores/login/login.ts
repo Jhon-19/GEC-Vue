@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { reactive, toRefs } from "vue";
-import type { ILoginState } from "./types";
+import type { ILoginState, IMenuItem } from "./types";
 import type {
   ILoginPayload,
   IResetPasswordPayload,
@@ -12,6 +12,7 @@ import { GEC_AUTH } from "@/constants/auth.constant";
 import { ElMessage } from "element-plus";
 import { isEmail } from "class-validator";
 import piniaPersistConfig from "@/utils/persist";
+import { mapMenusToRoutes } from "@/utils/map-menus";
 
 export const useLoginStore = defineStore(
   "login",
@@ -32,6 +33,7 @@ export const useLoginStore = defineStore(
 
     function changeUserMenus(userMenus: any) {
       loginState.userMenus = userMenus;
+      addMenuRoutes(userMenus);
     }
 
     async function loginIn(loginPayload: ILoginPayload) {
@@ -79,17 +81,15 @@ export const useLoginStore = defineStore(
   }
 );
 
-interface MenuItemType {
-  id: string;
-  name: string;
-  isSubMenu: boolean;
-  url?: string;
-  icon?: string;
-  children?: MenuItemType[];
+export function addMenuRoutes(userMenus: IMenuItem[]) {
+  const routes = mapMenusToRoutes(userMenus);
+  routes.forEach((route) => {
+    router.addRoute("main", route);
+  });
 }
 
 // test
-const testUserMenus: MenuItemType[] = [
+const testUserMenus: IMenuItem[] = [
   {
     id: "1",
     name: "用户",
@@ -143,7 +143,7 @@ const testUserMenus: MenuItemType[] = [
         id: "3-3",
         name: "资料修改",
         isSubMenu: false,
-        url: "/main/resource/",
+        url: "/main/resource/edit",
       },
     ],
   },

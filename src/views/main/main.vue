@@ -6,7 +6,9 @@
         <ElHeader>
           <NavHeader />
         </ElHeader>
-        <ElMain>Main</ElMain>
+        <ElMain>
+          <RouterView></RouterView>
+        </ElMain>
       </ElContainer>
     </ElContainer>
   </div>
