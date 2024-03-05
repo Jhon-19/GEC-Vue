@@ -25,6 +25,9 @@
         </template>
         <template v-else>
           <ElMenuItem :index="item.id" @click="handleMenuItemClick(item)">
+            <ElIcon v-if="item.icon">
+              <component :is="item.icon"></component>
+            </ElIcon>
             <span>{{ item.name }}</span>
           </ElMenuItem>
         </template>

@@ -81,11 +81,19 @@ export const useLoginStore = defineStore(
   }
 );
 
-export function addMenuRoutes(userMenus: IMenuItem[]) {
+function addMenuRoutes(userMenus: IMenuItem[]) {
   const routes = mapMenusToRoutes(userMenus);
   routes.forEach((route) => {
     router.addRoute("main", route);
   });
+}
+
+export function initMenuRoutes() {
+  const loginStore = useLoginStore();
+  const userMenus = loginStore.userMenus;
+  if (userMenus.length > 0) {
+    addMenuRoutes(userMenus);
+  }
 }
 
 // test
@@ -120,12 +128,14 @@ const testUserMenus: IMenuItem[] = [
     id: "2",
     name: "知识图谱",
     isSubMenu: false,
+    icon: "Cherry",
     url: "/main/knowledge-graph",
   },
   {
     id: "3",
     name: "资料管理",
     isSubMenu: true,
+    icon: "FolderOpened",
     children: [
       {
         id: "3-1",
@@ -151,6 +161,7 @@ const testUserMenus: IMenuItem[] = [
     id: "4",
     name: "设置",
     isSubMenu: false,
+    icon: "Setting",
     url: "/main/setting",
   },
 ];
