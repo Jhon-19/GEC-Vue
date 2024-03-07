@@ -1,12 +1,19 @@
 import { reactive, toRefs } from "vue";
 import { defineStore } from "pinia";
-import type { IUserInfoPayload, IUserInfoState } from "./types";
+import type { IUserInfoState } from "./types";
 import { Role } from "@/constants/user.constant";
 import { ElMessage } from "element-plus";
 import localCache from "@/utils/cache";
 import { resetPasswordRequest } from "@/service/login/login";
 import type { IResetPasswordPayload } from "@/service/login/types";
-import { changeUserInfoRequest } from "@/service/main/user/user";
+import {
+  changePasswordRequest,
+  changeUserInfoRequest,
+} from "@/service/main/user/user";
+import type {
+  IChangePasswordPayload,
+  IUserInfoPayload,
+} from "@/service/main/user/types";
 
 export const useUserStore = defineStore(
   "user",
@@ -53,11 +60,23 @@ export const useUserStore = defineStore(
       return changeResult.data;
     }
 
+    async function changePassword(
+      changePasswordPayload: IChangePasswordPayload
+    ) {
+      const changeResult = await changePasswordRequest(changePasswordPayload);
+      if (changeResult.data) {
+        ElMessage.success("修改密码成功");
+      } else {
+        ElMessage.error("修改失败");
+      }
+    }
+
     return {
       ...toRefs(userState),
       setUserInfo,
       resetPassword,
       changeUserInfo,
+      changePassword,
     };
   },
   {

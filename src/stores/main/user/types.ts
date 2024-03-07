@@ -8,9 +8,3 @@ export interface IUserInfoState {
   role: Role;
   id: string;
 }
-
-export interface IUserInfoPayload {
-  id: string;
-  fullName: string;
-  phoneNumber: string;
-}

@@ -7,3 +7,15 @@ export interface IUserInfo {
   email: string;
   role: keyof typeof Role;
 }
+
+export interface IUserInfoPayload {
+  id: string;
+  fullName: string;
+  phoneNumber: string;
+}
+
+export interface IChangePasswordPayload {
+  id: string;
+  oldPassword: string;
+  newPassword: string;
+}

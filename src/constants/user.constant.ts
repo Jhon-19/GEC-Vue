@@ -1,6 +1,7 @@
 export enum UserAPI {
   UserInfo = "/users/user-info",
   ResetPassword = "/users/reset-password",
+  ChangePassword = "/users/change-password",
 }
 
 export enum Role {

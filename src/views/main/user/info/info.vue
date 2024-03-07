@@ -20,7 +20,13 @@
 
     <ElDialog v-model="dialogEditVisible" title="修改用户信息" width="400px">
       <ElCard shadow="never">
-        <ElForm label-width="80px" :model="userInfo" :rules="rules" status-icon>
+        <ElForm
+          label-width="80px"
+          :model="userInfo"
+          :rules="rules"
+          ref="formRef"
+          status-icon
+        >
           <ElFormItem label="真实姓名" prop="fullName">
             <ElInput v-model="userInfo.fullName" />
           </ElFormItem>
@@ -48,10 +54,11 @@ import {
   ElForm,
   ElFormItem,
   ElInput,
+  type FormInstance,
 } from "element-plus";
 import { reactive, ref } from "vue";
 import { rules } from "./config/info-config";
-import type { IUserInfoPayload } from "@/stores/main/user/types.js";
+import type { IUserInfoPayload } from "@/service/main/user/types";
 
 const dialogEditVisible = ref(false);
 
@@ -70,14 +77,20 @@ const userInfo = reactive({
   phoneNumber: userStore.phoneNumber,
 });
 
-async function changeUserInfoAction() {
-  const userInfoPayload: IUserInfoPayload = {
-    id: userStore.id,
-    fullName: userInfo.fullName,
-    phoneNumber: userInfo.phoneNumber,
-  };
-  await userStore.changeUserInfo(userInfoPayload);
-  dialogEditVisible.value = false;
+const formRef = ref<FormInstance>();
+
+function changeUserInfoAction() {
+  formRef.value?.validate(async (valid) => {
+    if (valid) {
+      const userInfoPayload: IUserInfoPayload = {
+        id: userStore.id,
+        fullName: userInfo.fullName,
+        phoneNumber: userInfo.phoneNumber,
+      };
+      await userStore.changeUserInfo(userInfoPayload);
+      dialogEditVisible.value = false;
+    }
+  });
 }
 </script>
 
