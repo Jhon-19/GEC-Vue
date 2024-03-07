@@ -4,7 +4,7 @@ export interface ILoginPayload {
 }
 
 export interface ILoginResult {
-  id: number;
+  id: string;
   token: string;
 }
 

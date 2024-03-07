@@ -13,25 +13,29 @@ import { ElMessage } from "element-plus";
 import { isEmail } from "class-validator";
 import piniaPersistConfig from "@/utils/persist";
 import { mapMenusToRoutes } from "@/utils/map-menus";
+import { useUserStore } from "../main/user/user";
+import type { IUserInfoState } from "../main/user/types";
+import { getUserInfoRequest } from "@/service/main/user/user";
+import { Role } from "@/constants/user.constant";
 
 export const useLoginStore = defineStore(
   "login",
   () => {
     const loginState = reactive<ILoginState>({
       token: "",
-      userInfo: {},
       userMenus: [],
     });
 
-    function changeToken(token: string) {
+    function setToken(token: string) {
       loginState.token = token;
     }
 
-    function changeUserInfo(userInfo: any) {
-      loginState.userInfo = userInfo;
+    function setUserInfo(userInfo: IUserInfoState) {
+      const userStore = useUserStore();
+      userStore.setUserInfo(userInfo);
     }
 
-    function changeUserMenus(userMenus: any) {
+    function setUserMenus(userMenus: any) {
       loginState.userMenus = userMenus;
       addMenuRoutes(userMenus);
     }
@@ -41,11 +45,20 @@ export const useLoginStore = defineStore(
       const code = loginResult.code;
       if (code === "200") {
         const { id, token } = loginResult.data;
-        changeToken(token);
+        setToken(token);
         localCache.setCache(GEC_AUTH, token);
 
+        const infoResult = await getUserInfoRequest(id);
+        const infoData = infoResult.data;
+        const userInfo: IUserInfoState = {
+          ...infoData,
+          role: Role[infoData.role],
+          id,
+        };
+        setUserInfo(userInfo);
+
         // todo: get remote userMenus
-        changeUserMenus(testUserMenus);
+        setUserMenus(testUserMenus);
 
         router.push("/main");
       } else {
@@ -59,21 +72,9 @@ export const useLoginStore = defineStore(
       }
     }
 
-    async function resetPassword(resetPasswordPayload: IResetPasswordPayload) {
-      const resetResult = await resetPasswordRequest(resetPasswordPayload);
-      const resetStatus = resetResult.data;
-      if (resetStatus) {
-        ElMessage.success("密码重置成功");
-      } else {
-        ElMessage.error("验证未通过");
-      }
-      localCache.deleteCache("password");
-    }
-
     return {
       ...toRefs(loginState),
       loginIn,
-      resetPassword,
     };
   },
   {

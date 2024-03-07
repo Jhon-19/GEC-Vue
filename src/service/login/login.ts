@@ -6,6 +6,7 @@ import type {
   ILoginResult,
   IResetPasswordPayload,
 } from "./types";
+import { UserAPI } from "@/constants/user.constant";
 
 export function loginRequest(loginPayload: ILoginPayload) {
   return gecRequest.post<IDataType<ILoginResult>>({
@@ -18,7 +19,7 @@ export function resetPasswordRequest(
   resetPasswordPayload: IResetPasswordPayload
 ) {
   return gecRequest.post<IDataType<boolean>>({
-    url: AuthAPI.ResetPassword,
+    url: UserAPI.ResetPassword,
     data: resetPasswordPayload,
   });
 }

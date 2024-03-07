@@ -67,9 +67,9 @@ import {
 } from "element-plus";
 import { reactive, ref } from "vue";
 import { rules } from "../config/reset-password-config";
-import { useLoginStore } from "@/stores/login/login";
+import { useUserStore } from "@/stores/main/user/user";
 
-const loginStore = useLoginStore();
+const userStore = useUserStore();
 
 const account = reactive({
   username: "",
@@ -82,7 +82,7 @@ const formRef = ref<FormInstance>();
 const resetPasswordAction = () => {
   formRef.value?.validate((valid) => {
     if (valid) {
-      loginStore.resetPassword({ ...account });
+      userStore.resetPassword({ ...account });
     }
   });
 };

@@ -3,7 +3,7 @@
     <ElDropdown>
       <span class="el-dropdown-link">
         <ElAvatar size="small" :src="avaterUrl" />
-        <span class="username">Tom</span>
+        <span class="username">{{ username }}</span>
       </span>
       <template #dropdown>
         <ElDropdownMenu>
@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useUserStore } from "@/stores/main/user/user";
 import {
   ElAvatar,
   ElDropdown,
@@ -24,6 +25,9 @@ import {
 } from "element-plus";
 const avaterUrl =
   "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
+
+const userStore = useUserStore();
+const username = userStore.username;
 </script>
 
 <style scoped lang="less">
