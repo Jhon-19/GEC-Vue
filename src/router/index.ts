@@ -1,5 +1,6 @@
 import { whitelistOfAuth } from "./whitelist";
 import { GEC_AUTH } from "@/constants/auth.constant";
+import { GEC_INDEX } from "@/constants/user.constant";
 import localCache from "@/utils/cache";
 import {
   createRouter,
@@ -51,6 +52,13 @@ router.beforeEach((to) => {
     const token = localCache.getCache(GEC_AUTH);
     if (!token) {
       return "/login";
+    }
+  }
+
+  if (path === "/main") {
+    const index = localCache.getCache(GEC_INDEX);
+    if (index && index?.startsWith("/")) {
+      return index;
     }
   }
 });

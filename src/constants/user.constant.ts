@@ -9,3 +9,5 @@ export enum Role {
   "manager" = "管理员",
   "staff" = "用户",
 }
+
+export const GEC_INDEX = "index";
