@@ -48,7 +48,7 @@ const options = [
   { label: "知识图谱", value: "/main/knowledge-graph" },
 ];
 
-const indexLabel = ref(options[0].value);
+const indexLabel = ref(localCache.getCache(GEC_INDEX) ?? options[0].value);
 
 function setIndex() {
   localCache.setCache(GEC_INDEX, indexLabel.value);
