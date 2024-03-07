@@ -1,14 +1,16 @@
 <template>
   <div>
-    <ElDropdown>
+    <ElDropdown @command="handleCommand">
       <span class="el-dropdown-link">
         <ElAvatar size="small" :src="avaterUrl" />
         <span class="username">{{ username }}</span>
       </span>
       <template #dropdown>
         <ElDropdownMenu>
-          <ElDropdownItem icon="circle-close">退出登录</ElDropdownItem>
-          <ElDropdownItem divided>用户信息</ElDropdownItem>
+          <ElDropdownItem icon="circle-close" command="logout"
+            >退出登录</ElDropdownItem
+          >
+          <ElDropdownItem command="user-info" divided>用户信息</ElDropdownItem>
         </ElDropdownMenu>
       </template>
     </ElDropdown>
@@ -16,7 +18,10 @@
 </template>
 
 <script lang="ts" setup>
+import { GEC_AUTH } from "@/constants/auth.constant";
+import router from "@/router";
 import { useUserStore } from "@/stores/main/user/user";
+import localCache from "@/utils/cache";
 import {
   ElAvatar,
   ElDropdown,
@@ -28,6 +33,15 @@ const avaterUrl =
 
 const userStore = useUserStore();
 const username = userStore.username;
+
+const handleCommand = (command: string | number | object) => {
+  if (command === "logout") {
+    localCache.deleteCache(GEC_AUTH);
+    router.push("/login");
+  } else if (command === "user-info") {
+    router.push("/main/user/info");
+  }
+};
 </script>
 
 <style scoped lang="less">
