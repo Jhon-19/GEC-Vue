@@ -1,4 +1,4 @@
-import { reactive, toRefs } from "vue";
+import { computed, reactive, toRefs } from "vue";
 import { defineStore } from "pinia";
 import type { IUserInfoState } from "./types";
 import { Role } from "@/constants/user.constant";
@@ -9,9 +9,12 @@ import type { IResetPasswordPayload } from "@/service/login/types";
 import {
   changePasswordRequest,
   changeUserInfoRequest,
+  changeUserRoleRequest,
+  getAllUsersRequest,
 } from "@/service/main/user/user";
 import type {
   IChangePasswordPayload,
+  IChangeUserRolePayload,
   IUserInfoPayload,
 } from "@/service/main/user/types";
 
@@ -39,12 +42,7 @@ export const useUserStore = defineStore(
 
     async function resetPassword(resetPasswordPayload: IResetPasswordPayload) {
       const resetResult = await resetPasswordRequest(resetPasswordPayload);
-      const resetStatus = resetResult.data;
-      if (resetStatus) {
-        ElMessage.success("密码重置成功");
-      } else {
-        ElMessage.error("验证未通过");
-      }
+      showMessage(resetResult.data, "密码重置成功", "验证未通过");
       localCache.deleteCache("password");
     }
 
@@ -64,11 +62,21 @@ export const useUserStore = defineStore(
       changePasswordPayload: IChangePasswordPayload
     ) {
       const changeResult = await changePasswordRequest(changePasswordPayload);
-      if (changeResult.data) {
-        ElMessage.success("修改密码成功");
-      } else {
-        ElMessage.error("修改失败");
-      }
+      showMessage(changeResult.data, "修改密码成功");
+    }
+
+    async function getAllUsers() {
+      const allUsersResult = await getAllUsersRequest();
+      return allUsersResult.data ?? [];
+    }
+
+    async function changeUserRole(
+      changeUserRolePayload: IChangeUserRolePayload
+    ) {
+      const changeResult = await changeUserRoleRequest(changeUserRolePayload);
+      const isChanged = changeResult.data;
+      showMessage(isChanged, "修改用户权限成功");
+      return isChanged;
     }
 
     return {
@@ -77,9 +85,23 @@ export const useUserStore = defineStore(
       resetPassword,
       changeUserInfo,
       changePassword,
+      getAllUsers,
+      changeUserRole,
     };
   },
   {
     persist: true,
   }
 );
+
+function showMessage(
+  flag: boolean,
+  successMessage: string,
+  errorMessage = "修改失败"
+) {
+  if (flag) {
+    ElMessage.success(successMessage);
+  } else {
+    ElMessage.error(errorMessage);
+  }
+}

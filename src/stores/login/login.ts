@@ -5,7 +5,11 @@ import type {
   ILoginPayload,
   IResetPasswordPayload,
 } from "@/service/login/types";
-import { loginRequest, resetPasswordRequest } from "@/service/login/login";
+import {
+  checkAuthRequest,
+  loginRequest,
+  resetPasswordRequest,
+} from "@/service/login/login";
 import localCache from "@/utils/cache";
 import router from "@/router";
 import { GEC_AUTH } from "@/constants/auth.constant";
@@ -87,6 +91,14 @@ function addMenuRoutes(userMenus: IMenuItem[]) {
   routes.forEach((route) => {
     router.addRoute("main", route);
   });
+}
+
+export async function checkAuth() {
+  const checkAuthResult = await checkAuthRequest();
+  if (!checkAuthResult.data) {
+    localCache.deleteCache(GEC_AUTH);
+    router.push("/login");
+  }
 }
 
 export function initMenuRoutes() {

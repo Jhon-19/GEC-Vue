@@ -23,3 +23,9 @@ export function resetPasswordRequest(
     data: resetPasswordPayload,
   });
 }
+
+export function checkAuthRequest() {
+  return gecRequest.get<IDataType<boolean>>({
+    url: UserAPI.CheckAuth,
+  });
+}

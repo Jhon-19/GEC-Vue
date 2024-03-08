@@ -2,6 +2,8 @@ import gecRequest from "@/service";
 import type { IDataType } from "@/service/types";
 import type {
   IChangePasswordPayload,
+  IChangeUserRolePayload,
+  IRoleUser,
   IUserInfo,
   IUserInfoPayload,
 } from "./types";
@@ -27,5 +29,20 @@ export function changePasswordRequest(
   return gecRequest.post<IDataType<boolean>>({
     url: UserAPI.ChangePassword,
     data: changePasswordPayload,
+  });
+}
+
+export function getAllUsersRequest() {
+  return gecRequest.get<IDataType<IRoleUser[]>>({
+    url: UserAPI.GetAllUsers,
+  });
+}
+
+export function changeUserRoleRequest(
+  changeUserRolePayload: IChangeUserRolePayload
+) {
+  return gecRequest.post<IDataType<boolean>>({
+    url: UserAPI.ChangeUserRole,
+    data: changeUserRolePayload,
   });
 }

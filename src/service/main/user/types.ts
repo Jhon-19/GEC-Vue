@@ -8,6 +8,13 @@ export interface IUserInfo {
   role: keyof typeof Role;
 }
 
+export interface IRoleUser {
+  id: string;
+  username: string;
+  fullName?: string;
+  role: keyof typeof Role;
+}
+
 export interface IUserInfoPayload {
   id: string;
   fullName: string;
@@ -18,4 +25,10 @@ export interface IChangePasswordPayload {
   id: string;
   oldPassword: string;
   newPassword: string;
+}
+
+export interface IChangeUserRolePayload {
+  adminId: string;
+  id: string;
+  role: keyof typeof Role;
 }

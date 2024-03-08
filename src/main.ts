@@ -10,7 +10,7 @@ import "element-plus/dist/index.css";
 import ElementPlus from "element-plus";
 
 import "@/styles/common.style.less"; // import global styles
-import { initMenuRoutes } from "./stores/login/login";
+import { checkAuth, initMenuRoutes } from "./stores/login/login";
 
 const app = createApp(App);
 
@@ -18,6 +18,7 @@ const pinia = createPinia();
 pinia.use(piniaPluginPersistedState);
 
 app.use(pinia);
+await checkAuth();
 initMenuRoutes();
 app.use(router);
 
