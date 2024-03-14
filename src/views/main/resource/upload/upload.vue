@@ -82,7 +82,7 @@ onMounted(async () => {
 const acceptFileTypeStr = acceptFileTypes.join(",");
 
 const folder = ref("");
-const uploadUrl = computed(() => ResourceAPI.BaseUploadUrl + folder.value);
+const uploadUrl = computed(() => ResourceAPI.BaseResourceUrl + folder.value);
 
 let fileList: UploadFiles = [];
 

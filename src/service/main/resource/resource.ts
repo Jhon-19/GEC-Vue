@@ -15,3 +15,9 @@ export function uploadFilesRequest(uploadFilesPayload: IUploadFilesPayload) {
     data: uploadFilesPayload.files,
   });
 }
+
+export function findAllInFolderRequest(folder: string) {
+  return gecRequest.get<IDataType<string[]>>({
+    url: `${ResourceAPI.BaseResourceUrl}${folder}/`,
+  });
+}

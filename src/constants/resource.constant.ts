@@ -1,5 +1,5 @@
 export enum ResourceAPI {
-  BaseUploadUrl = "/resource/file/",
+  BaseResourceUrl = "/resource/file/",
   AllFolder = "/resource/folder",
 }
 

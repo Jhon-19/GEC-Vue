@@ -2,11 +2,11 @@ import { defineStore } from "pinia";
 import { reactive, toRefs } from "vue";
 import type { IResourceState } from "./types";
 import {
+  findAllInFolderRequest,
   getAllFoldersRequest,
   uploadFilesRequest,
 } from "@/service/main/resource/resource";
 import type { IUploadFilesPayload } from "@/service/main/resource/types";
-import { ElMessage } from "element-plus";
 
 export const useResourceStore = defineStore(
   "resource",
@@ -28,10 +28,20 @@ export const useResourceStore = defineStore(
       return uploadStatus;
     }
 
+    async function findAllInFolder(folder: string) {
+      const findResult = await findAllInFolderRequest(folder);
+      let fileList: string[] = [];
+      if (findResult.code === "200") {
+        fileList = findResult.data;
+      }
+      return fileList;
+    }
+
     return {
       ...toRefs(resourceState),
       getAllFolders,
       uploadFiles,
+      findAllInFolder,
     };
   },
   {
