@@ -1,26 +1,19 @@
+import { GEC_AUTH } from "@/constants/auth.constant";
+import { Role } from "@/constants/user.constant";
+import router from "@/router";
+import { checkAuthRequest, loginRequest } from "@/service/login/login";
+import type { ILoginPayload } from "@/service/login/types";
+import { getUserInfoRequest } from "@/service/main/user/user";
+import localCache from "@/utils/cache";
+import { mapMenusToRoutes } from "@/utils/map-menus";
+import piniaPersistConfig from "@/utils/persist";
+import { isEmail } from "class-validator";
+import { ElMessage } from "element-plus";
 import { defineStore } from "pinia";
 import { reactive, toRefs } from "vue";
-import type { ILoginState, IMenuItem } from "./types";
-import type {
-  ILoginPayload,
-  IResetPasswordPayload,
-} from "@/service/login/types";
-import {
-  checkAuthRequest,
-  loginRequest,
-  resetPasswordRequest,
-} from "@/service/login/login";
-import localCache from "@/utils/cache";
-import router from "@/router";
-import { GEC_AUTH } from "@/constants/auth.constant";
-import { ElMessage } from "element-plus";
-import { isEmail } from "class-validator";
-import piniaPersistConfig from "@/utils/persist";
-import { mapMenusToRoutes } from "@/utils/map-menus";
-import { useUserStore } from "../main/user/user";
 import type { IUserInfoState } from "../main/user/types";
-import { getUserInfoRequest } from "@/service/main/user/user";
-import { Role } from "@/constants/user.constant";
+import { useUserStore } from "../main/user/user";
+import type { ILoginState, IMenuItem } from "./types";
 
 export const useLoginStore = defineStore(
   "login",
