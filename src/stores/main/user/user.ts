@@ -1,4 +1,4 @@
-import { computed, reactive, toRefs } from "vue";
+import { reactive, toRefs } from "vue";
 import { defineStore } from "pinia";
 import type { IUserInfoState } from "./types";
 import { Role } from "@/constants/user.constant";
@@ -17,6 +17,7 @@ import type {
   IChangeUserRolePayload,
   IUserInfoPayload,
 } from "@/service/main/user/types";
+import { showMessage } from "@/utils/message";
 
 export const useUserStore = defineStore(
   "user",
@@ -93,15 +94,3 @@ export const useUserStore = defineStore(
     persist: true,
   }
 );
-
-function showMessage(
-  flag: boolean,
-  successMessage: string,
-  errorMessage = "修改失败"
-) {
-  if (flag) {
-    ElMessage.success(successMessage);
-  } else {
-    ElMessage.error(errorMessage);
-  }
-}

@@ -9,9 +9,7 @@
               <div>
                 <ElInput v-model="searchFileName" placeholder="搜索全部资料">
                   <template #append>
-                    <ElButton @click="searchFiles">
-                      <ElIcon><Search /></ElIcon>
-                    </ElButton>
+                    <ElButton @click="searchFiles" :icon="Search" />
                   </template>
                 </ElInput>
               </div>
@@ -72,6 +70,7 @@ import { cloneDeep } from "lodash";
 import { parseFileName } from "@/utils/resource";
 import { ResourceAPI } from "@/constants/resource.constant";
 import { BASE_URL } from "@/service/request/config";
+import { Search } from "@element-plus/icons-vue";
 
 const resourceStore = useResourceStore();
 
@@ -161,7 +160,10 @@ function searchFiles() {
   resourceData.data.forEach((folderTree: Tree) => {
     if (folderTree.isFolder) {
       folderTree.children?.forEach((fileTree: Tree) => {
-        if (fileTree.label.indexOf(searchFileName.value) != -1) {
+        if (
+          searchFileName.value !== "" &&
+          fileTree.label.indexOf(searchFileName.value) != -1
+        ) {
           fileTree.isSearched = true;
           expandedKeys.push(folderTree.id);
         }
@@ -178,11 +180,5 @@ function searchFiles() {
   align-items: center;
   justify-content: space-between;
   padding-right: 10px;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 </style>

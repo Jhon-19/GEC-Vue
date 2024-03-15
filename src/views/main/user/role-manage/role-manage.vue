@@ -6,13 +6,13 @@
           <template #header>
             <div class="card-header">
               <span>用户权限管理</span>
-              <ElInput v-model="valueSearch" placeholder="查找用户">
-                <template #append>
-                  <ElButton @click="searchUsers">
-                    <ElIcon><Search /></ElIcon>
-                  </ElButton>
-                </template>
-              </ElInput>
+              <div>
+                <ElInput v-model="valueSearch" placeholder="查找用户">
+                  <template #append>
+                    <ElButton @click="searchUsers" :icon="Search" />
+                  </template>
+                </ElInput>
+              </div>
             </div>
           </template>
           <ElTable
@@ -75,6 +75,7 @@ import type {
   IRoleUser,
 } from "@/service/main/user/types";
 import { cloneDeep } from "lodash";
+import { Search } from "@element-plus/icons-vue";
 
 const tableHeight = window.innerHeight / 2;
 
@@ -136,19 +137,4 @@ function searchUsers() {
 }
 </script>
 
-<style scoped lang="less">
-.card-header {
-  display: flex;
-  justify-content: space-between;
-
-  span {
-    flex: 2;
-    display: flex;
-    align-items: center;
-  }
-
-  .el-input {
-    flex: 1;
-  }
-}
-</style>
+<style scoped lang="less"></style>
