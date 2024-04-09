@@ -12,6 +12,8 @@ import ElementPlus from "element-plus";
 import "@/styles/common.style.less"; // import global styles
 import { checkAuth, initMenuRoutes } from "./stores/login/login";
 
+import "element-plus/theme-chalk/dark/css-vars.css";
+
 const app = createApp(App);
 
 const pinia = createPinia();

@@ -1,15 +1,22 @@
 <template>
   <div class="main">
     <ElContainer class="main-content">
-      <ElAside width="200px"><NavMenu /></ElAside>
-      <ElContainer class="page">
-        <ElHeader>
-          <NavHeader />
-        </ElHeader>
+      <template v-if="!isKg">
+        <ElAside width="200px"><NavMenu /></ElAside>
+        <ElContainer class="page">
+          <ElHeader>
+            <NavHeader />
+          </ElHeader>
+          <ElMain>
+            <RouterView></RouterView>
+          </ElMain>
+        </ElContainer>
+      </template>
+      <template v-else>
         <ElMain>
           <RouterView></RouterView>
         </ElMain>
-      </ElContainer>
+      </template>
     </ElContainer>
   </div>
 </template>
@@ -18,6 +25,14 @@
 import { ElAside, ElContainer, ElHeader, ElMain } from "element-plus";
 import NavMenu from "@/components/nav-menu";
 import NavHeader from "@/components/nav-header";
+import { ref, watchEffect } from "vue";
+import router from "@/router";
+
+const isKg = ref(false);
+
+watchEffect(() => {
+  isKg.value = router.currentRoute.value.name?.toString() === "knowledge-graph";
+});
 </script>
 
 <style scoped lang="less">

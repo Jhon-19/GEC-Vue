@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import { ElIcon, ElMenu, ElMenuItem, ElSubMenu } from "element-plus";
-import logo from "@/assets/images/logo.jpg";
+import logo from "@/assets/images/logo-circle.png";
 import { useLoginStore } from "@/stores/login/login";
 import router from "@/router";
 
@@ -54,6 +54,7 @@ const handleMenuItemClick = (item: any) => {
 
 <style scoped lang="less">
 .logo-div {
+  margin-top: 15px;
   height: 60px;
   display: flex;
   justify-content: center;
