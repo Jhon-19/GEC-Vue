@@ -1,39 +1,50 @@
-# gec-vue
+# Gec-Vue
 
-This template should help get you started developing with Vue 3 in Vite.
+燃气爆炸案件多模态知识图谱管理系统前端页面
 
-## Recommended IDE Setup
+## 技术栈
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+`TypeScript`+`Vue3.js`+`Pinia`+`Vue Router`+`Element Plus`+`axios`+`Neovis.js`+`Vite`
 
-## Type Support for `.vue` Imports in TS
+## 推荐 IDE 设置
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## 页面展示
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+### 登录页面
 
-## Customize configuration
+![login.png](./images/login.png)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+### 用户信息页面
 
-## Project Setup
+![user-info.png](./images/user-info.png)
+
+### 权限管理页面（仅管理员可见）
+
+![role-manage.png](./images/role-manage.png)
+
+### 文件管理页面
+
+![file-manage.png](./images/file-manage.png)
+
+### 知识图谱可视化页面
+
+![KG.png](./images/KG.png)
+
+## 项目安装
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 开发
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### 编译
 
 ```sh
 npm run build
